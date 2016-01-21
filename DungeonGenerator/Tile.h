@@ -2,8 +2,10 @@
 
 #include <string>
 #include <sstream>
+#include <memory>
 
 #include "Position.h"
+#include "Expansion.h"
 
 class Tile{
 
@@ -13,6 +15,7 @@ class Tile{
 
 public:
 					Tile(std::string idArg, Position& posArg, float zRotArg);
+					Tile(std::string idArg, std::unique_ptr<Expansion> posArg, float zRotArg);
 					~Tile();
 
 	const Position&	GetPos() const;

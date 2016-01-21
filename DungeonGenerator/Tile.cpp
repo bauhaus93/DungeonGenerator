@@ -9,7 +9,6 @@ Tile::Tile(string idArg, Position& posArg, float zRotArg):
 
 }
 
-
 Tile::~Tile(){
 }
 

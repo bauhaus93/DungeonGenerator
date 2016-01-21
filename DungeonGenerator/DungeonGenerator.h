@@ -24,7 +24,7 @@ class DungeonGenerator{
 	unsigned int					maxSize;
 	std::minstd_rand				generator;
 	std::vector<Tile>				tiles;
-	std::vector<Expansion>			expansions;
+	std::vector<std::unique_ptr<Expansion>>			        expansions;
 	std::map<TileType, std::unique_ptr<TileFactory>>	factory;
 
 	int								Random(int max);
@@ -37,7 +37,7 @@ public:
 	void							Work();
 	void							WriteTiles();
 	void							Generate();
-	void							AddExpansion(Expansion exp);
+	void							AddExpansion(const Expansion& exp);
 
 
 	//bool							WouldCollide(const Position & pos);

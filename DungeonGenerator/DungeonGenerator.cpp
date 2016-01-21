@@ -9,7 +9,7 @@ static chrono::high_resolution_clock timer;
 
 DungeonGenerator::DungeonGenerator():
 	communicator{},
-	maxSize{200},
+	maxSize{5},
 	generator{ static_cast<unsigned int>(chrono::system_clock::now().time_since_epoch().count())}{
 }
 
@@ -90,17 +90,16 @@ void DungeonGenerator::WriteTiles(){
 	cout << "all tiles sent to morrowind" << endl;
 }
 
-void DungeonGenerator::AddExpansion(Expansion exp){
-	expansions.push_back(exp);
+void DungeonGenerator::AddExpansion(const Expansion& exp){
+	expansions.push_back(make_unique<Expansion>(exp));
 }
 
 void DungeonGenerator::Generate(){
 
-	while (tiles.size() <= maxSize && !expansions.empty()){
-		Expansion& exp = expansions.back();
-		factory[TileType::HALL2]->Add(exp, tiles, expansions);
+	while (tiles.size() < maxSize && !expansions.empty()){
+		factory[TileType::HALL2]->Add(tiles, expansions);
 	}
-
+	factory[TileType::HALL1]->Add(tiles, expansions);
 }
 
 /*bool DungeonGenerator::WouldCollide(const Position& pos){

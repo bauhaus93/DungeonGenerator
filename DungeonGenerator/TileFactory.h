@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "Point.h"
 #include "Position.h"
@@ -16,8 +17,9 @@ protected:
 
 public:
 					TileFactory(const std::string& idArg, const Size& sizeArg);
-					~TileFactory();
+	virtual			~TileFactory();
 
-	virtual bool	TileFactory::Add(Expansion & expansion, std::vector<Tile> tiles, std::vector<Expansion> expansions) = 0;
+	virtual bool	Add(std::vector<Tile>& tiles, std::vector<std::unique_ptr<Expansion>>& expansions) = 0;
+
 };
 

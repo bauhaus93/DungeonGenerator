@@ -10,7 +10,7 @@ public:
 				Position(float xArg, float yArg, float zArg);
 				~Position();
 
-	Position	Move(Direction dir, const Size& size);
+	void		Move(Direction dir, const Size& size);
 
 };
 

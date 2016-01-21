@@ -10,10 +10,12 @@ Hallway1Factory::Hallway1Factory(const std::string& idArg, const Size& sizeArg):
 Hallway1Factory::~Hallway1Factory(){
 }
 
-bool Hallway1Factory::Add(Expansion & expansion, vector<Tile> tiles, vector<Expansion> expansions){
+bool Hallway1Factory::Add(vector<Tile>& tiles, vector<std::unique_ptr<Expansion>>& expansions){
 	float zRot;
+	unique_ptr<Expansion> exp = move(expansions.back());
+	expansions.pop_back();
 
-	switch (expansion.GetDirection()){
+	switch (exp->GetDirection()){
 		case Direction::NORTH:
 			zRot = 180.f;
 			break;
@@ -29,6 +31,6 @@ bool Hallway1Factory::Add(Expansion & expansion, vector<Tile> tiles, vector<Expa
 		default:
 			return false;
 	}
-	tiles.push_back(Tile(id, expansion, zRot));
+	tiles.push_back(Tile(id, (Position&)*exp, zRot));
 	return true;
 }

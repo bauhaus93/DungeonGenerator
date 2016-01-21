@@ -4,7 +4,7 @@ using namespace std;
 
 Communicator::Communicator():
 	connected{false}{
-	hPipe = CreateNamedPipe(	PIPE_NAME,
+	hPipe = CreateNamedPipe(    PIPE_NAME,
 								PIPE_ACCESS_DUPLEX, PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT, PIPE_UNLIMITED_INSTANCES,
 								BUFFER_SIZE,
 								BUFFER_SIZE,
@@ -103,7 +103,7 @@ void Communicator::Write(){
 
 void Communicator::WriteTile(const Tile& tile){
 	memset(buffer, 0, sizeof buffer);
-	snprintf(buffer, BUFFER_SIZE, "%f %f %f %f %s\n", tile.GetPos().GetX(), tile.GetPos().GetY(), tile.GetPos().GetZ(), tile.GetZRot(), tile.GetID().c_str());
+	(void) snprintf(buffer, BUFFER_SIZE, "%f %f %f %f %s\n", tile.GetPos().GetX(), tile.GetPos().GetY(), tile.GetPos().GetZ(), tile.GetZRot(), tile.GetID().c_str());
 	cout << "sending: " << buffer;
 	writeBufferSize = strlen(buffer);
 	Write();

@@ -9,25 +9,23 @@ Position::Position(float xArg, float yArg, float zArg):
 Position::~Position(){
 }
 
-Position Position::Move(Direction dir, const Size& size){
-	float xNew = x, yNew = y, zNew = z;
+void Position::Move(Direction dir, const Size& size){
 	switch (dir){
 		case Direction::NORTH:
-			xNew += size.GetY();
+			y += size.GetY();
 			break;
 		case Direction::EAST:
-			yNew += size.GetX();
+			x += size.GetX();
 			break;
 		case Direction::SOUTH:
-			yNew -= size.GetY();
+			y -= size.GetY();
 			break;
 		case Direction::WEST:
-			xNew -= size.GetX();
+			x -= size.GetX();
 			break;
 		default:
 			break;
 	}
-	return Position(xNew, yNew, zNew);
 }
 
 
