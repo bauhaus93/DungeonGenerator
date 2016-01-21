@@ -3,29 +3,31 @@
 
 
 Position::Position(float xArg, float yArg, float zArg):
-	x{ xArg },
-	y{ yArg },
-	z{ zArg }{
+	Point(xArg, yArg, zArg){
 }
 
 Position::~Position(){
 }
 
-void Position::Move(Direction dir, float scale){
+Position Position::Move(Direction dir, const Size& size){
+	float xNew = x, yNew = y, zNew = z;
 	switch (dir){
 		case Direction::NORTH:
-			y += scale;
+			xNew += size.GetY();
 			break;
 		case Direction::EAST:
-			x += scale;
+			yNew += size.GetX();
 			break;
 		case Direction::SOUTH:
-			y -= scale;
+			yNew -= size.GetY();
 			break;
 		case Direction::WEST:
-			x -= scale;
+			xNew -= size.GetX();
 			break;
 		default:
 			break;
 	}
+	return Position(xNew, yNew, zNew);
 }
+
+

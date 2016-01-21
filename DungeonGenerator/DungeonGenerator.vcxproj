@@ -74,7 +74,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -112,16 +119,26 @@
   <ItemGroup>
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="DungeonGenerator.cpp" />
+    <ClCompile Include="Expansion.cpp" />
+    <ClCompile Include="Hallway1Factory.cpp" />
+    <ClCompile Include="Hallway2Factory.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="DungeonGenerator.h" />
+    <ClInclude Include="Expansion.h" />
+    <ClInclude Include="Hallway1Factory.h" />
+    <ClInclude Include="Hallway2Factory.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

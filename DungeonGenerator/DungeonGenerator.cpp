@@ -28,6 +28,7 @@ int DungeonGenerator::Random(int min, int max){
 
 void DungeonGenerator::Work(){
 	string data;
+	short scale = 0;
 
 	if (!communicator.Connect())
 		return;
@@ -59,23 +60,16 @@ void DungeonGenerator::Work(){
 			z = communicator.ReadFloat();
 			cout << "object: " << data << ": (" << x << "/" << y << "/" << z << ")" << endl;
 			if (x == 0.f)
-				tileIDs.insert(pair<TileType, string>(TileType::HALL1, data));
+				factory.insert(make_pair(TileType::HALL1, make_unique<Hallway1Factory>(data, Size(scale, scale, scale))));
 			else if (x == 512.f)
-				tileIDs.insert(pair<TileType, string>(TileType::HALL2, data));
-			else if (x == 1024.f)
-				tileIDs.insert(pair<TileType, string>(TileType::HALL3, data));
-			else if (x == 1536.f)
-				tileIDs.insert(pair<TileType, string>(TileType::HALL4, data));
-			else if (x == 2048.f)
-				tileIDs.insert(pair<TileType, string>(TileType::CORNER, data));
-			
+				factory.insert(make_pair(TileType::HALL2, make_unique<Hallway2Factory>(data, Size(scale, scale, scale))));
 		}
 	} while (data != "END");
 
 	cout << "request data finished" << endl;
 
-	Position pos{ 0.f, 0.f, 0.f };
-	Generate(pos, Direction::WEST);
+	AddExpansion(Expansion(0.f, 0.f, 0.f, Direction::NORTH));
+	Generate();
 
 	WriteTiles();
 
@@ -96,87 +90,29 @@ void DungeonGenerator::WriteTiles(){
 	cout << "all tiles sent to morrowind" << endl;
 }
 
-void DungeonGenerator::Generate(Position& pos, Direction dir){
-
-	if (tiles.size() >= maxSize)
-		return;
-
-	if (!FreeSpace(pos, dir, 1)){
-		MakeHallway1(pos, dir);
-		cout << "no move possible in current dir!" << endl;
-		return;
-	}
-
-	int rnd = Random(100);
-	if (rnd < 10){
-		int len = Random(1, 2);
-		if (tiles.size() + len > maxSize){
-			len = maxSize - tiles.size();
-		}
-		len = FreeSpace(pos, dir, len);
-		MakeHallway2(pos, dir, len);
-	}
-	/*else if (rnd < 70){
-		MakeHallway3(pos, dir);
-	}*/
-	else{
-		MakeCorner(pos, dir);
-	}
+void DungeonGenerator::AddExpansion(Expansion exp){
+	expansions.push_back(exp);
 }
 
-void DungeonGenerator::MakeHallway1(Position& pos, Direction dir){
-	float zRot;
+void DungeonGenerator::Generate(){
 
-	switch (dir){
-	case Direction::NORTH:
-		zRot = 180.f;
-		break;
-	case Direction::EAST:
-		zRot = 270.f;
-		break;
-	case Direction::SOUTH:
-		zRot = 0.f;
-		break;
-	case Direction::WEST:
-		zRot = 90.f;
-		break;
-	default:
-		break;
+	while (tiles.size() <= maxSize && !expansions.empty()){
+		Expansion& exp = expansions.back();
+		factory[TileType::HALL2]->Add(exp, tiles, expansions);
 	}
-	tiles.push_back(Tile(tileIDs.at(TileType::HALL1), pos, zRot));
-}
-
-void DungeonGenerator::MakeHallway2(Position& pos, Direction dir, int length){
-	float zRot;
-
-	if (length == 0)
-		return;
-
-	switch (dir){
-		case Direction::NORTH:
-		case Direction::SOUTH:
-			zRot = 0;
-			break;
-		case Direction::EAST:
-		case Direction::WEST:
-			zRot = 90;
-			break;
-		default:
-			break;
-	}
-
-	for (int i = 0; i < length; i++){
-		tiles.push_back(Tile(tileIDs.at(TileType::HALL2), pos, zRot));
-		pos.Move(dir, scale);
-	}
-	Generate(pos, dir);
-}
-
-void DungeonGenerator::MakeHallway3(Position& pos, Direction dir){
 
 }
 
-void DungeonGenerator::MakeCorner(Position& pos, Direction& dir){
+/*bool DungeonGenerator::WouldCollide(const Position& pos){
+	for (auto& tile : tiles){
+		const Position& tilePos = tile.GetPos();
+		if (abs(pos.GetX() - tilePos.GetX()) < scale  && abs(pos.GetY() - tilePos.GetY()) < scale)
+			return true;
+	}
+	return false;
+}*/
+
+/*void DungeonGenerator::MakeCorner(Position& pos, Direction& dir){
 	bool endcap = false;
 	float zRot = 0.f;
 
@@ -238,14 +174,6 @@ bool DungeonGenerator::CalculateCorner(Position& pos, Direction& dir, Direction 
 	return true;
 }
 
-bool DungeonGenerator::WouldCollide(const Position& pos){
-	for (auto& tile : tiles){
-		const Position& tilePos = tile.GetPos();
-		if (abs(pos.GetX() - tilePos.GetX()) < scale  && abs(pos.GetY() - tilePos.GetY()) < scale)
-			return true;
-	}
-	return false;
-}
 
 int DungeonGenerator::FreeSpace(Position pos, Direction dir, int times){
 
@@ -262,4 +190,4 @@ bool DungeonGenerator::CornerPossible(Position pos, Direction newDir){
 	return !WouldCollide(pos);
 }
 
-
+*/
