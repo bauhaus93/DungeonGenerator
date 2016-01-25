@@ -118,7 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CollisionCheck.cpp" />
+    <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="CornerFactory.cpp" />
     <ClCompile Include="DungeonGenerator.cpp" />
@@ -130,9 +130,11 @@
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileFactory.cpp" />
+    <ClCompile Include="TileHallway1.cpp" />
+    <ClCompile Include="TileHallway2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CollisionCheck.h" />
+    <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="CornerFactory.h" />
     <ClInclude Include="Defs.h" />
@@ -144,10 +146,8 @@
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileFactory.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
+    <ClInclude Include="TileHallway1.h" />
+    <ClInclude Include="TileHallway2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

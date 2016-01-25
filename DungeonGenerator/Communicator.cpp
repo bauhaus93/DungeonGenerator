@@ -98,7 +98,7 @@ void Communicator::Write(){
 void Communicator::WriteTile(const Tile& tile){
 	memset(buffer, 0, sizeof buffer);
 	(void) snprintf(buffer, BUFFER_SIZE, "%f %f %f %f %s\n", tile.GetPos()[Dim::X], tile.GetPos()[Dim::Y], tile.GetPos()[Dim::Z], tile.GetRotation()[Dim::Z], tile.GetID().c_str());
-	cout << "sending: " << buffer;
+	//cout << "sending: " << buffer;
 	writeBufferSize = strlen(buffer);
 	Write();
 }

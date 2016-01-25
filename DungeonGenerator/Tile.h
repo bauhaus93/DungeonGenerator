@@ -3,12 +3,14 @@
 #include <string>
 #include <sstream>
 #include <memory>
+#include <vector>
 
 #include "Position.h"
 #include "Expansion.h"
 
 class Tile{
 
+protected:
 	std::string		id;
 	Position		pos;
 	Size			size;
@@ -16,7 +18,9 @@ class Tile{
 
 public:
 					Tile(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
-					~Tile();
+	virtual			~Tile();
+
+	virtual int		AddExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList) = 0;
 
 	const Position&	GetPos()		const;
 	const Size&		GetSize()		const;

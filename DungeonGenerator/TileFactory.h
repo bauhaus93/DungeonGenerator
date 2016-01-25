@@ -16,10 +16,12 @@ protected:
 	Size			size;
 
 public:
-					TileFactory(const std::string& idArg, const Size& sizeArg);
-	virtual			~TileFactory();
+									TileFactory(const std::string& idArg, const Size& sizeArg);
+	virtual							~TileFactory();
 
-	virtual bool	Add(std::vector<Tile>& tiles, std::vector<std::unique_ptr<Expansion>>& expansions) = 0;
+	virtual std::unique_ptr<Tile>	Create(Expansion& exp) = 0;
+
+	const Size&						GetSize() const{ return size; };
 
 };
 

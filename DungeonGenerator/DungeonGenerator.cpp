@@ -9,8 +9,11 @@ static chrono::high_resolution_clock timer;
 
 DungeonGenerator::DungeonGenerator():
 	communicator{},
-	maxSize{5},
+	/*collision{ tiles, expansions },*/
+	maxSize{300},
 	generator{ static_cast<unsigned int>(chrono::system_clock::now().time_since_epoch().count())}{
+
+	collision = make_unique<CollisionChecker>(tiles, expansions);
 }
 
 DungeonGenerator::~DungeonGenerator(){
@@ -63,20 +66,25 @@ void DungeonGenerator::Work(){
 
 	AddExpansion(Expansion(0.f, 0.f, 0.f, Direction::NORTH));
 	Generate();
-
 	WriteTiles();
 
 	communicator.Disconnect();
 }
 
 void DungeonGenerator::WriteTiles(){
-	cout << "sending tiles to morrowind..." << endl;
-	for (auto& tile : tiles){
+	size_t count = 0;
+	auto start = timer.now();
+
+	cout << "sending tiles..." << endl;
+	for (const auto& tile : tiles){
 		if (communicator.HasError())
 			break;
-		communicator.WriteTile(tile);
+		communicator.WriteTile(*tile);
+		count++;
 	}
-	cout << "all tiles sent to morrowind" << endl;
+	chrono::duration<float> diff = (timer.now() - start);
+
+	cout << "sent " << count << " tiles in " << std::setprecision(2) << std::fixed << diff.count()*1e3 << " ms" << endl;
 }
 
 void DungeonGenerator::AddExpansion(const Expansion& exp){
@@ -84,21 +92,35 @@ void DungeonGenerator::AddExpansion(const Expansion& exp){
 }
 
 void DungeonGenerator::Generate(){
+	cout << "creating dungeon..." << endl;
+
+	auto start = timer.now();
 
 	while (tiles.size() < maxSize && !expansions.empty()){
-		factory[TileType::HALL2]->Add(tiles, expansions);
+		auto exp = move(expansions.back());
+		expansions.pop_back();
+
+		auto& tf = GetFactory();
+
+		if (collision->Check(*exp, tf.GetSize()))
+			continue;
+		
+		auto tile = tf.Create(*exp);
+		if (tile != NULL){
+			tile->AddExpansions(*exp, expansions);
+			tiles.push_back(move(tile));
+		}
 	}
-	factory[TileType::HALL1]->Add(tiles, expansions);
+	chrono::duration<float> diff = (timer.now() - start);
+
+	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms" << endl;
 }
 
-/*bool DungeonGenerator::WouldCollide(const Position& pos){
-	for (auto& tile : tiles){
-		const Position& tilePos = tile.GetPos();
-		if (abs(pos.GetX() - tilePos.GetX()) < scale  && abs(pos.GetY() - tilePos.GetY()) < scale)
-			return true;
-	}
-	return false;
-}*/
+TileFactory& DungeonGenerator::GetFactory(){
+	if (tiles.size() + 1 == maxSize)
+		return *factory[TileType::HALL1];
+	return *factory[TileType::HALL2];
+}
 
 /*void DungeonGenerator::MakeCorner(Position& pos, Direction& dir){
 	bool endcap = false;

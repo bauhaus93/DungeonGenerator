@@ -14,3 +14,4 @@ Expansion::Expansion(const Position& pos, Direction dirArg):
 
 Expansion::~Expansion(){
 }
+

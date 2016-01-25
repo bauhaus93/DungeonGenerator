@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <iomanip>
 #include <vector>
 #include <chrono>
 #include <random>
@@ -17,14 +19,16 @@
 #include "Hallway2Factory.h"
 #include "CornerFactory.h"
 #include "Expansion.h"
+#include "CollisionChecker.h"
 
 
 class DungeonGenerator{
 
 	Communicator					communicator;
+	std::unique_ptr<CollisionChecker>	collision;
 	unsigned int					maxSize;
 	std::minstd_rand				generator;
-	std::vector<Tile>				tiles;
+	std::vector<std::unique_ptr<Tile>>					tiles;
 	std::vector<std::unique_ptr<Expansion>>			    expansions;
 	std::map<TileType, std::unique_ptr<TileFactory>>	factory;
 
@@ -38,6 +42,7 @@ public:
 	void							Work();
 	void							WriteTiles();
 	void							Generate();
+	TileFactory&					GetFactory();
 	void							AddExpansion(const Expansion& exp);
 
 };

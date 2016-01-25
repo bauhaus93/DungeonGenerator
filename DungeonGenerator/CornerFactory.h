@@ -5,8 +5,8 @@
 class CornerFactory: public TileFactory{
 public:
 
-					CornerFactory(const std::string& idArg, const Size& sizeArg);
-					~CornerFactory();
-	bool			Add(std::vector<Tile>& tiles, std::vector<std::unique_ptr<Expansion>>& expansions);
+							CornerFactory(const std::string& idArg, const Size& sizeArg);
+							~CornerFactory();
+	std::unique_ptr<Tile>	Create(Expansion& exp);
 };
 
