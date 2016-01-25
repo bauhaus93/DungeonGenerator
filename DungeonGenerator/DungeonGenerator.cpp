@@ -14,16 +14,7 @@ DungeonGenerator::DungeonGenerator():
 }
 
 DungeonGenerator::~DungeonGenerator(){
-	if (communicator.Connected())
-		communicator.Disconnect();
-}
-
-int DungeonGenerator::Random(int max){
-	return generator() % max;
-}
-
-int DungeonGenerator::Random(int min, int max){
-	return min + Random(max - min + 1);
+	communicator.Disconnect();
 }
 
 void DungeonGenerator::Work(){
@@ -63,6 +54,8 @@ void DungeonGenerator::Work(){
 				factory.insert(make_pair(TileType::HALL1, make_unique<Hallway1Factory>(data, Size(scale, scale, scale))));
 			else if (x == 512.f)
 				factory.insert(make_pair(TileType::HALL2, make_unique<Hallway2Factory>(data, Size(scale, scale, scale))));
+			else if (x == 2048.f)
+				factory.insert(make_pair(TileType::CORNER, make_unique<CornerFactory>(data, Size(scale, scale, scale))));
 		}
 	} while (data != "END");
 
@@ -73,10 +66,6 @@ void DungeonGenerator::Work(){
 
 	WriteTiles();
 
-	/*for (auto& t : tiles){
-		cout << t.GetString() << endl;
-	}*/
-	
 	communicator.Disconnect();
 }
 

@@ -2,8 +2,8 @@
 
 
 
-Position::Position(float xArg, float yArg, float zArg):
-	Point(xArg, yArg, zArg){
+Position::Position(float x, float y, float z):
+	Dimension(x, y, z){
 }
 
 Position::~Position(){
@@ -12,16 +12,16 @@ Position::~Position(){
 void Position::Move(Direction dir, const Size& size){
 	switch (dir){
 		case Direction::NORTH:
-			y += size.GetY();
+			ModY(size.GetY());
 			break;
 		case Direction::EAST:
-			x += size.GetX();
+			ModX(size.GetX());
 			break;
 		case Direction::SOUTH:
-			y -= size.GetY();
+			ModY(-size.GetY());
 			break;
 		case Direction::WEST:
-			x -= size.GetX();
+			ModX(-size.GetX());
 			break;
 		default:
 			break;

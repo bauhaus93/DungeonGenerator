@@ -2,8 +2,8 @@
 
 
 
-Expansion::Expansion(float xArg, float yArg, float zArg, Direction dirArg):
-	Position{ xArg, yArg, zArg },
+Expansion::Expansion(float x, float y, float z, Direction dirArg):
+	Position{ x, y, z },
 	dir{ dirArg }{
 }
 

@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "TileFactory.h"
-#include "Point.h"
+#include "Dimension.h"
 #include "Expansion.h"
 #include "Tile.h"
 

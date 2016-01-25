@@ -12,25 +12,26 @@ Hallway2Factory::~Hallway2Factory(){
 }
 
 bool Hallway2Factory::Add(vector<Tile>& tiles, vector<unique_ptr<Expansion>>& expansions){
-	float zRot;
+	Rotation rot{};
+
 	unique_ptr<Expansion> exp = move(expansions.back());
 	expansions.pop_back();
 
 	switch (exp->GetDirection()){
 		case Direction::NORTH:
 		case Direction::SOUTH:
-			zRot = 0;
+			rot[Dim::Z] = 0.f;
 			break;
 		case Direction::EAST:
 		case Direction::WEST:
-			zRot = 90;
+			rot[Dim::Z] = 90.f;
 			break;
 		default:
 			return false;
 			break;
 	}
 
-	tiles.push_back(Tile(id, (Position&)*exp, zRot));
+	tiles.push_back(Tile(id, (Position&)*exp, size, rot));
 	exp->Move(exp->GetDirection(), size);
 	expansions.push_back(move(exp));
 

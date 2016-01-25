@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "Point.h"
+#include "Dimension.h"
 #include "Position.h"
 #include "Tile.h"
 #include "Expansion.h"

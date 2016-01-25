@@ -22,10 +22,6 @@ Communicator::~Communicator(){
 	CloseHandle(hPipe);
 }
 
-bool Communicator::HasError(){
-	return error;
-}
-
 bool Communicator::Connect(){
 	if (!ConnectNamedPipe(hPipe, NULL)){
 		Error("ConnectNamedPipe");
@@ -37,14 +33,12 @@ bool Communicator::Connect(){
 	return true;
 }
 
-bool Communicator::Connected(){
-	return connected;
-}
-
 void Communicator::Disconnect(){
-	DisconnectNamedPipe(hPipe);
-	connected = false;
-	cout << "Communicator disconnected!" << endl;
+	if (Connected()){
+		DisconnectNamedPipe(hPipe);
+		connected = false;
+		cout << "Communicator disconnected!" << endl;
+	}
 }
 
 void Communicator::Read(){
@@ -103,7 +97,7 @@ void Communicator::Write(){
 
 void Communicator::WriteTile(const Tile& tile){
 	memset(buffer, 0, sizeof buffer);
-	(void) snprintf(buffer, BUFFER_SIZE, "%f %f %f %f %s\n", tile.GetPos().GetX(), tile.GetPos().GetY(), tile.GetPos().GetZ(), tile.GetZRot(), tile.GetID().c_str());
+	(void) snprintf(buffer, BUFFER_SIZE, "%f %f %f %f %s\n", tile.GetPos()[Dim::X], tile.GetPos()[Dim::Y], tile.GetPos()[Dim::Z], tile.GetRotation()[Dim::Z], tile.GetID().c_str());
 	cout << "sending: " << buffer;
 	writeBufferSize = strlen(buffer);
 	Write();

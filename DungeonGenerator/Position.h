@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Defs.h"
-#include "Point.h"
+#include "Dimension.h"
 
 
-class Position: public Point{
+class Position: public Dimension{
 	
 public:
-				Position(float xArg, float yArg, float zArg);
+				Position(float x, float y, float z);
 				~Position();
 
 	void		Move(Direction dir, const Size& size);

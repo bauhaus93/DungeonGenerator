@@ -33,9 +33,6 @@
     <ClCompile Include="TileFactory.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Point.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Hallway1Factory.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -43,6 +40,15 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Hallway2Factory.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CornerFactory.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionCheck.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Dimension.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,9 +71,6 @@
     <ClInclude Include="TileFactory.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Hallway1Factory.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -77,5 +80,18 @@
     <ClInclude Include="Hallway2Factory.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="CornerFactory.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionCheck.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Dimension.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

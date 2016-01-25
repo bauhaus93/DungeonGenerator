@@ -6,6 +6,7 @@
 #include <Windows.h>
 
 #include "Tile.h"
+#include "Dimension.h"
 
 #ifdef PIPE_NAME
 #error "PIPE_NAME is already existing!"
@@ -32,9 +33,11 @@ private:
 public:
 				Communicator();
 				~Communicator();
-	bool		HasError();
+	bool		HasError(){ return error; };
+	bool		Connected(){ return connected; };
+
 	bool		Connect();
-	bool		Connected();
+
 	void		Disconnect();
 	std::string	ReadString();
 	float		ReadFloat();
@@ -43,4 +46,3 @@ public:
 
 	void		WriteTile(const Tile & tile);
 };
-

@@ -8,7 +8,7 @@ class Expansion: public Position{
 	Direction		dir;
 
 public:
-					Expansion(float xArg, float yArg, float zArg, Direction dirArg);
+					Expansion(float x, float y, float z, Direction dirArg);
 					Expansion(const Position& pos, Direction dirArg);
 					~Expansion();
 

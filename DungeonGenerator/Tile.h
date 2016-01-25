@@ -11,17 +11,34 @@ class Tile{
 
 	std::string		id;
 	Position		pos;
-	float			zRot;
+	Size			size;
+	Rotation		rotation;
 
 public:
-					Tile(std::string idArg, Position& posArg, float zRotArg);
-					Tile(std::string idArg, std::unique_ptr<Expansion> posArg, float zRotArg);
+					Tile(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
 					~Tile();
 
-	const Position&	GetPos() const;
-	float			GetZRot() const { return zRot; };
-	std::string		GetID() const	{ return id; };
+	const Position&	GetPos()		const;
+	const Size&		GetSize()		const;
+	const Rotation& GetRotation()	const;
+	std::string		GetID()			const;
 
 	std::string		GetString() const;
+};
+
+inline const Position& Tile::GetPos() const{
+	return pos;
+}
+
+inline const Size& Tile::GetSize() const{
+	return size;
+}
+
+inline const Rotation& Tile::GetRotation() const{
+	return rotation;
+};
+
+inline std::string Tile::GetID() const{
+	return id;
 };
 
