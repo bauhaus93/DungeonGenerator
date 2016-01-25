@@ -100,19 +100,19 @@ void DungeonGenerator::Generate(){
 		auto exp = move(expansions.back());
 		expansions.pop_back();
 
-		auto& tf = GetFactory();
+		vector<Expansion> possibleExpansions;
+		GetPossibleExpansions(*exp, factory[TileType::HALL1]->GetSize(), possibleExpansions);
 
-		if (collision->Check(*exp, tf.GetSize()))
-			continue;
+		auto& tf = GetFactory();
 		
 		auto tile = tf.Create(*exp);
 		if (tile != NULL){
-			tile->AddExpansions(*exp, expansions);
+			tile->AddValidExpansions(*exp, expansions, possibleExpansions);
 			tiles.push_back(move(tile));
 		}
 	}
-	chrono::duration<float> diff = (timer.now() - start);
 
+	chrono::duration<float> diff = (timer.now() - start);
 	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms" << endl;
 }
 
@@ -120,6 +120,18 @@ TileFactory& DungeonGenerator::GetFactory(){
 	if (tiles.size() + 1 == maxSize)
 		return *factory[TileType::HALL1];
 	return *factory[TileType::HALL2];
+}
+
+void DungeonGenerator::GetPossibleExpansions(const Expansion& src, const Size& size, vector<Expansion>& possibleExpansions){
+	Expansion test = src;
+
+	for (int i = 0; i < 4; i++){
+		auto dir = static_cast<Direction>(i);
+		test.Move(dir, size);
+		if (collision->Check(test, size) == false)
+			possibleExpansions.push_back(test);
+		test.Move(common::OppositeDirection(dir), size);
+	}
 }
 
 /*void DungeonGenerator::MakeCorner(Position& pos, Direction& dir){

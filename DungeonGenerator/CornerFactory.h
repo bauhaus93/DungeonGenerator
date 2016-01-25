@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TileFactory.h"
+#include "CornerFactory.h"
 
 class CornerFactory: public TileFactory{
 public:

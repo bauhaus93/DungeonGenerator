@@ -6,6 +6,7 @@
 
 #include "Tile.h"
 #include "Expansion.h"
+#include "CollisionChecker.h"
 
 class TileHallway1:	public Tile{
 
@@ -14,10 +15,9 @@ public:
 			TileHallway1(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
 			~TileHallway1();
 
-	int		AddExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList) override;
+	void	AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions) override;
 
 };
 
-inline int TileHallway1::AddExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList){
-	return 0;
+inline void TileHallway1::AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions){
 }

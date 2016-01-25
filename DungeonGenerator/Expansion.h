@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+
 #include "Position.h"
 #include "Defs.h"
 
@@ -12,6 +15,8 @@ public:
 					Expansion(const Position& pos, Direction dirArg);
 					~Expansion();
 
-	Direction		GetDirection(){ return dir; };
+	Direction		GetDirection() const { return dir; };
+	void			SetDirection(Direction newDir){ dir = newDir; };
+
 };
 

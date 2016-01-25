@@ -1,6 +1,6 @@
 #include "Expansion.h"
 
-
+using namespace std;
 
 Expansion::Expansion(float x, float y, float z, Direction dirArg):
 	Position{ x, y, z },

@@ -43,6 +43,7 @@ public:
 	void							WriteTiles();
 	void							Generate();
 	TileFactory&					GetFactory();
+	void							GetPossibleExpansions(const Expansion& src, const Size& size, std::vector<Expansion>& possibleExpansions);
 	void							AddExpansion(const Expansion& exp);
 
 };

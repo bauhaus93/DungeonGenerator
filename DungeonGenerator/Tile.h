@@ -20,14 +20,14 @@ public:
 					Tile(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
 	virtual			~Tile();
 
-	virtual int		AddExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList) = 0;
+	virtual void	AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions) = 0;
 
 	const Position&	GetPos()		const;
 	const Size&		GetSize()		const;
 	const Rotation& GetRotation()	const;
 	std::string		GetID()			const;
 
-	std::string		GetString() const;
+	std::string		GetString()		const;
 };
 
 inline const Position& Tile::GetPos() const{

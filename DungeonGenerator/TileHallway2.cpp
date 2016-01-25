@@ -10,10 +10,12 @@ TileHallway2::~TileHallway2(){
 
 }
 
-int TileHallway2::AddExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList){
-	auto exp = make_unique<Expansion>(pos, srcExp.GetDirection());
-	exp->Move(exp->GetDirection(), size);
-	expansionList.push_back(move(exp));
-	return 1;
+void TileHallway2::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
+	for (auto& possibleExp : possibleExpansions){
+		if (srcExp.GetDirection() == possibleExp.GetDirection()){
+			expansionList.push_back(make_unique<Expansion>(possibleExp));
+			break;
+		}
+	}
 }
 

@@ -129,6 +129,7 @@
     <ClCompile Include="Dimension.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileCorner.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileHallway1.cpp" />
     <ClCompile Include="TileHallway2.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Dimension.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileCorner.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileHallway1.h" />
     <ClInclude Include="TileHallway2.h" />
