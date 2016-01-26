@@ -9,10 +9,9 @@ static chrono::high_resolution_clock timer;
 
 DungeonGenerator::DungeonGenerator():
 	communicator{},
-	/*collision{ tiles, expansions },*/
-	maxSize{300},
-	generator{ static_cast<unsigned int>(chrono::system_clock::now().time_since_epoch().count())}{
+	maxSize{300}{
 
+	common::Randomize();
 	collision = make_unique<CollisionChecker>(tiles, expansions);
 }
 
@@ -103,7 +102,7 @@ void DungeonGenerator::Generate(){
 		vector<Expansion> possibleExpansions;
 		GetPossibleExpansions(*exp, factory[TileType::HALL1]->GetSize(), possibleExpansions);
 
-		auto& tf = GetFactory();
+		auto& tf = GetFactory(exp->GetDirection(), possibleExpansions);
 		
 		auto tile = tf.Create(*exp);
 		if (tile != NULL){
@@ -116,9 +115,19 @@ void DungeonGenerator::Generate(){
 	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms" << endl;
 }
 
-TileFactory& DungeonGenerator::GetFactory(){
-	if (tiles.size() + 1 == maxSize)
+TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& possibleExpansions){
+	if (tiles.size() + 1 == maxSize || possibleExpansions.size() == 0)
 		return *factory[TileType::HALL1];
+
+	bool straight = false;
+	for (auto& exp : possibleExpansions){
+		if (currDir == exp.GetDirection())
+			straight = true;
+	}
+
+	if (common::Random(4) == 0 || straight == false)
+		return *factory[TileType::CORNER];
+
 	return *factory[TileType::HALL2];
 }
 
@@ -128,88 +137,10 @@ void DungeonGenerator::GetPossibleExpansions(const Expansion& src, const Size& s
 	for (int i = 0; i < 4; i++){
 		auto dir = static_cast<Direction>(i);
 		test.Move(dir, size);
-		if (collision->Check(test, size) == false)
+		if (collision->Check(test, size) == false){
 			possibleExpansions.push_back(test);
+			possibleExpansions.back().SetDirection(dir);
+		}
 		test.Move(common::OppositeDirection(dir), size);
 	}
 }
-
-/*void DungeonGenerator::MakeCorner(Position& pos, Direction& dir){
-	bool endcap = false;
-	float zRot = 0.f;
-
-	switch (dir){
-		case Direction::NORTH:
-		case Direction::SOUTH:
-			cout << "new corner from n/s" << endl;
-			endcap = !CalculateCorner(pos, dir, Direction::EAST, Direction::WEST, zRot);
-			break;
-		case Direction::EAST:
-		case Direction::WEST:
-			cout << "new corner from e/w" << endl;
-			endcap = !CalculateCorner(pos, dir, Direction::NORTH, Direction::SOUTH, zRot);
-			break;
-		default:
-			break;
-	}
-	if (!endcap){
-		tiles.push_back(Tile(tileIDs.at(TileType::CORNER), pos, zRot));
-		pos.Move(dir, scale);
-		Generate(pos, dir);
-	}
-}
-
-bool DungeonGenerator::CalculateCorner(Position& pos, Direction& dir, Direction toA, Direction toB, float& zRot){
-	Direction newDir;
-	bool possible[] = { CornerPossible(pos, toA), CornerPossible(pos, toB) };
-
-	if (possible[0] && possible[1]){
-		cout << "both possible" << endl;
-		if (Random(2) == 0)
-			newDir = toA;
-		else
-			newDir = toB;
-	}
-	else if (possible[0]){
-		cout << "to n/e possible" << endl;
-		newDir = toA;
-	}
-	else if (possible[1]){
-		cout << "to s/w possible" << endl;
-		newDir = toB;
-	}
-	else{
-		cout << "no possible corner" << endl;
-		MakeHallway1(pos, dir);
-		return false;
-	}
-
-	if (dir == Direction::NORTH && newDir == Direction::WEST || dir == Direction::EAST && newDir == Direction::SOUTH)
-		zRot = 0.f;
-	else if (dir == Direction::SOUTH && newDir == Direction::WEST || dir == Direction::EAST && newDir == Direction::NORTH)
-		zRot = 90.f;
-	else if (dir == Direction::SOUTH && newDir == Direction::EAST || dir == Direction::WEST && newDir == Direction::NORTH)
-		zRot = 180.f;
-	else if (dir == Direction::NORTH && newDir == Direction::EAST || dir == Direction::WEST && newDir == Direction::SOUTH)
-		zRot = 270.f;
-	dir = newDir;
-	return true;
-}
-
-
-int DungeonGenerator::FreeSpace(Position pos, Direction dir, int times){
-
-	for (int i = 0; i < times; i++){
-		pos.Move(dir, scale);
-		if (WouldCollide(pos))
-			return i;
-	}
-	return times;
-}
-
-bool DungeonGenerator::CornerPossible(Position pos, Direction newDir){
-	pos.Move(newDir, scale);
-	return !WouldCollide(pos);
-}
-
-*/

@@ -27,13 +27,10 @@ class DungeonGenerator{
 	Communicator					communicator;
 	std::unique_ptr<CollisionChecker>	collision;
 	unsigned int					maxSize;
-	std::minstd_rand				generator;
+
 	std::vector<std::unique_ptr<Tile>>					tiles;
 	std::vector<std::unique_ptr<Expansion>>			    expansions;
 	std::map<TileType, std::unique_ptr<TileFactory>>	factory;
-
-	int								Random(int max);
-	int								Random(int min, int max);
 
 public:
 									DungeonGenerator();
@@ -42,16 +39,9 @@ public:
 	void							Work();
 	void							WriteTiles();
 	void							Generate();
-	TileFactory&					GetFactory();
+	TileFactory&					GetFactory(Direction currDir, std::vector<Expansion>& possibleExpansions);
 	void							GetPossibleExpansions(const Expansion& src, const Size& size, std::vector<Expansion>& possibleExpansions);
 	void							AddExpansion(const Expansion& exp);
 
 };
 
-inline int DungeonGenerator::Random(int max){
-	return generator() % max;
-}
-
-inline int DungeonGenerator::Random(int min, int max){
-	return min + Random(max - min + 1);
-}
