@@ -10,7 +10,6 @@
 #include <cmath>
 #include <memory>
 
-#include "Communicator.h"
 #include "Tile.h"
 #include "Position.h"
 #include "Defs.h"
@@ -21,12 +20,10 @@
 #include "Expansion.h"
 #include "CollisionChecker.h"
 
-
 class DungeonGenerator{
 
-	Communicator					communicator;
 	std::unique_ptr<CollisionChecker>	collision;
-	unsigned int					maxSize;
+	unsigned int						maxSize;
 
 	std::vector<std::unique_ptr<Tile>>					tiles;
 	std::vector<std::unique_ptr<Expansion>>			    expansions;
@@ -36,8 +33,10 @@ public:
 									DungeonGenerator();
 									~DungeonGenerator();
 
-	void							Work();
-	void							WriteTiles();
+	void							AddTileFactory(TileType type, std::string id, Size& size);
+
+	std::unique_ptr<Tile>			GetTiles();
+
 	void							Generate();
 	TileFactory&					GetFactory(Direction currDir, std::vector<Expansion>& possibleExpansions);
 	void							GetPossibleExpansions(const Expansion& src, const Size& size, std::vector<Expansion>& possibleExpansions);

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Tiles">
+      <UniqueIdentifier>{7635d86b-15b3-483a-a3cc-5ea4783d9245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Tiles">
+      <UniqueIdentifier>{0c3ecd8f-b2fb-48d5-ade8-041fc706a4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Factories">
+      <UniqueIdentifier>{77356538-0be8-475c-883b-bbc07d0a4b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Factories">
+      <UniqueIdentifier>{f51cff94-35eb-4031-b388-92b835d0e6a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Communicator.cpp">
@@ -27,22 +39,7 @@
     <ClCompile Include="Position.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TileFactory.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Hallway1Factory.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Expansion.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Hallway2Factory.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="CornerFactory.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Dimension.cpp">
@@ -51,13 +48,31 @@
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="TileHallway2.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TileHallway1.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="TileCorner.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TileHallway1.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TileHallway2.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CornerFactory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway1Factory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway2Factory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="TileFactory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,22 +89,7 @@
     <ClInclude Include="Position.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="TileFactory.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Hallway1Factory.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Expansion.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Hallway2Factory.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="CornerFactory.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Dimension.h">
@@ -98,13 +98,37 @@
     <ClInclude Include="CollisionChecker.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="TileHallway2.h">
-      <Filter>Headerdateien</Filter>
+    <ClInclude Include="Tile.h">
+      <Filter>Headerdateien\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="TileHallway1.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TileHallway2.h">
+      <Filter>Headerdateien\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CornerFactory.h">
+      <Filter>Headerdateien\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway1Factory.h">
+      <Filter>Headerdateien\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway2Factory.h">
+      <Filter>Headerdateien\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFactory.h">
+      <Filter>Headerdateien\Factories</Filter>
     </ClInclude>
     <ClInclude Include="TileCorner.h">
+      <Filter>Headerdateien\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonHandler.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

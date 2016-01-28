@@ -8,82 +8,45 @@ static chrono::high_resolution_clock timer;
 
 
 DungeonGenerator::DungeonGenerator():
-	communicator{},
 	maxSize{300}{
 
 	common::Randomize();
 	collision = make_unique<CollisionChecker>(tiles, expansions);
+	cout << "New Dungeon Generator created!" << endl;
 }
 
 DungeonGenerator::~DungeonGenerator(){
-	communicator.Disconnect();
+
 }
 
-void DungeonGenerator::Work(){
-	string data;
-	short scale = 0;
-
-	if (!communicator.Connect())
-		return;
-
-	data = communicator.ReadString();
-	if (data == "START"){
-		cout << "got a dungeon request" << endl;
+void DungeonGenerator::AddTileFactory(TileType type, string id, Size& size){
+	switch (type){
+	case TileType::HALL1:
+		factory.insert(make_pair(type, make_unique<Hallway1Factory>(id, size)));
+		break;
+	case TileType::HALL2:
+		factory.insert(make_pair(type, make_unique<Hallway2Factory>(id, size)));
+		break;
+	/*case TileType::HALL3:
+		factory.insert(make_pair(type, make_unique<Hallway3Factory>(id, size)));
+		break;
+	case TileType::HALL4:
+		factory.insert(make_pair(type, make_unique<Hallway4Factory>(id, size)));
+		break;*/
+	case TileType::CORNER:
+		factory.insert(make_pair(type, make_unique<CornerFactory>(id, size)));
+		break;
+	default:
+		break;
 	}
-	else{
-		cerr << "protocol error" << endl;
-		communicator.Disconnect();
-		return;
-	}
-
-	scale = communicator.ReadShort();
-	if (scale <= 0){
-		cerr << "invalid scale: " << scale << endl;
-		communicator.Disconnect();
-		return;
-	}
-	cout << "scale is " << scale << endl;
-
-	do{
-		data = communicator.ReadString();
-		if (data != "END"){
-			float x, y, z;
-			x = communicator.ReadFloat();
-			y = communicator.ReadFloat();
-			z = communicator.ReadFloat();
-			cout << "object: " << data << ": (" << x << "/" << y << "/" << z << ")" << endl;
-			if (x == 0.f)
-				factory.insert(make_pair(TileType::HALL1, make_unique<Hallway1Factory>(data, Size(scale, scale, scale))));
-			else if (x == 512.f)
-				factory.insert(make_pair(TileType::HALL2, make_unique<Hallway2Factory>(data, Size(scale, scale, scale))));
-			else if (x == 2048.f)
-				factory.insert(make_pair(TileType::CORNER, make_unique<CornerFactory>(data, Size(scale, scale, scale))));
-		}
-	} while (data != "END");
-
-	cout << "request data finished" << endl;
-
-	AddExpansion(Expansion(0.f, 0.f, 0.f, Direction::NORTH));
-	Generate();
-	WriteTiles();
-
-	communicator.Disconnect();
 }
 
-void DungeonGenerator::WriteTiles(){
-	size_t count = 0;
-	auto start = timer.now();
-
-	cout << "sending tiles..." << endl;
-	for (const auto& tile : tiles){
-		if (communicator.HasError())
-			break;
-		communicator.WriteTile(*tile);
-		count++;
-	}
-	chrono::duration<float> diff = (timer.now() - start);
-
-	cout << "sent " << count << " tiles in " << std::setprecision(2) << std::fixed << diff.count()*1e3 << " ms" << endl;
+unique_ptr<Tile> DungeonGenerator::GetTiles(){
+	if (tiles.empty())
+		return nullptr;
+	auto tile = move(tiles.back());
+	tiles.pop_back();
+	return move(tile);
 }
 
 void DungeonGenerator::AddExpansion(const Expansion& exp){
