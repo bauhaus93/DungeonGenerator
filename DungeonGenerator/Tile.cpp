@@ -11,6 +11,7 @@ Tile::Tile(const string& idArg, const Position& posArg, const Size& sizeArg, con
 }
 
 Tile::~Tile(){
+	cout << "tile freed!" << endl;
 }
 
 string Tile::GetString() const{

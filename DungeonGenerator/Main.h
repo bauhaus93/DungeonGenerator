@@ -16,8 +16,8 @@
 
 namespace DungeonDll{
 	DUNGEON_API long							GetDungeon();
-	DUNGEON_API bool							AddTileFactory(long dungeon, TileType type, std::string id, Size& size);
-	DUNGEON_API bool							AddExpansion(long dungeon, Position& pos, Direction dir);
-	DUNGEON_API bool							Generate(long dungeon);
-	DUNGEON_API std::unique_ptr<Tile>			GetTiles(long dungeon);
+	DUNGEON_API long							AddTileFactory(long dungeon, long type, const char* id, float sizeX, float sizeY, float sizeZ);
+	DUNGEON_API long							AddExpansion(long dungeon, float posX, float posY, float posZ, long direction);
+	DUNGEON_API long							Generate(long dungeon);
+	DUNGEON_API long							GetTiles(long dungeon, std::string& id, float& posX, float& posY, float& posZ, float& rotX, float& rotY, float& rotZ);
 }

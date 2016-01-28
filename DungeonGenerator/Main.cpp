@@ -31,19 +31,38 @@ namespace DungeonDll{
 		return dungeonHandler->AddDungeon();
 	}
 
-	bool AddTileFactory(long dungeon, TileType type, std::string id, Size& size){
-		return dungeonHandler->AddTileFactory(dungeon, type, id, size);
+	long AddTileFactory(long dungeon, long type, const char* id, float sizeX, float sizeY, float sizeZ){
+		std::string idStr{ id };
+		Size size{ sizeX, sizeY, sizeZ };
+		if (type < 0 || type > 4)
+			return 0l;
+		return dungeonHandler->AddTileFactory(dungeon, static_cast<TileType>(type), idStr, size);
 	}
 
-	bool AddExpansion(long dungeon, Position& pos, Direction dir){
-		return dungeonHandler->AddExpansion(dungeon, pos, dir);
+	long AddExpansion(long dungeon, float posX, float posY, float posZ, long direction){
+		Position pos{ posX, posY, posZ };
+		if (direction < 0 || direction > 3)
+			return 0l;
+		return dungeonHandler->AddExpansion(dungeon, pos, static_cast<Direction>(direction));
 	}
 
-	bool Generate(long dungeon){
+	long Generate(long dungeon){
 		return dungeonHandler->Generate(dungeon);
 	}
-	std::unique_ptr<Tile> GetTiles(long dungeon){
-		return dungeonHandler->GetTiles(dungeon);
+
+	long GetTiles(long dungeon, std::string& id, float& posX, float& posY, float& posZ, float& rotX, float& rotY, float& rotZ){
+		auto tile = dungeonHandler->GetTiles(dungeon);
+		if (tile){
+			id = tile->GetID();
+			posX = tile->GetPos().GetX();
+			posY = tile->GetPos().GetY();
+			posZ = tile->GetPos().GetZ();
+			rotX = tile->GetRotation().GetX();
+			rotY = tile->GetRotation().GetY();
+			rotZ = tile->GetRotation().GetZ();
+			return 1l;
+		}
+		return 0;
 	}
 
 }

@@ -55,6 +55,7 @@ void DungeonGenerator::AddExpansion(const Expansion& exp){
 
 void DungeonGenerator::Generate(){
 	cout << "creating dungeon..." << endl;
+	cout << "# of expansions: " << expansions.size() << endl;
 
 	auto start = timer.now();
 
@@ -75,7 +76,7 @@ void DungeonGenerator::Generate(){
 	}
 
 	chrono::duration<float> diff = (timer.now() - start);
-	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms" << endl;
+	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms (" << tiles.size() << " tiles)" << endl;
 }
 
 TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& possibleExpansions){

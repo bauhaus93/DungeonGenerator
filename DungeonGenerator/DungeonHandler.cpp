@@ -20,6 +20,7 @@ long DungeonHandler::AddDungeon(){
 
 bool DungeonHandler::AddTileFactory(long dungeon, TileType type, string id, Size& size){
 	try{
+		cout << "adding tilefactory \"" << id << "\", type: " << static_cast<int>(type) << ", size: " << size[Dim::X] << "/" << size[Dim::Y] << "/" << size[Dim::Z] << endl;
 		dungeons.at(dungeon)->AddTileFactory(type, id, size);
 	}
 	catch (const out_of_range& e){
