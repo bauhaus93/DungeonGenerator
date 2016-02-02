@@ -10,7 +10,24 @@ Tile::Tile(const string& idArg, const Position& posArg, const Size& sizeArg, con
 
 }
 
+Tile::Tile(const string& idArg, const Position& posArg, const Size& sizeArg):
+	id{ idArg },
+	pos{ posArg },
+	size{ sizeArg },
+	rotation{ }{
+
+}
+
 Tile::~Tile(){
+}
+
+void Tile::AddValidExpansions(Expansion & srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions){
+	FilterExpansions(srcExp, possibleExpansions);
+	
+	Align(srcExp, possibleExpansions);
+
+	for (Expansion& exp : possibleExpansions)
+		expansionList.push_back(make_unique<Expansion>(exp));
 }
 
 string Tile::GetString() const{

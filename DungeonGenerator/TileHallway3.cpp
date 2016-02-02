@@ -2,31 +2,40 @@
 
 using namespace std;
 
-TileHallway3::TileHallway3(const string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg):
+TileHallway3::TileHallway3(const string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg) :
 	Tile{ idArg, posArg, sizeArg, rotationArg }{
+}
+
+TileHallway3::TileHallway3(const string& idArg, const Position& posArg, const Size& sizeArg) :
+	Tile{ idArg, posArg, sizeArg }{
 }
 
 
 TileHallway3::~TileHallway3(){
 }
 
-void TileHallway3::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
+/*void TileHallway3::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
 
+	FilterExpansions(srcExp, possibleExpansions);
+	Align(srcExp, possibleExpansions);
+
+	for(Expansion& exp : possibleExpansions)
+		expansionList.push_back(make_unique<Expansion>(exp));
+}*/
+
+void TileHallway3::FilterExpansions(Expansion& srcExp, vector<Expansion>& possibleExpansions){
 	while (possibleExpansions.size() > 2){
-		possibleExpansions.erase(possibleExpansions.begin()+common::Random(possibleExpansions.size()));
+		possibleExpansions.erase(possibleExpansions.begin() + common::Random(possibleExpansions.size()));
 	}
 	assert(possibleExpansions.size() == 2);
-
-	Direction dirA = possibleExpansions[0].GetDirection();
-	Direction dirB = possibleExpansions[1].GetDirection();
-
-	Align(common::OppositeDirection(srcExp.GetDirection()), dirA, dirB);	//Opposite bc make all directions going out of the object, to make alignment more easy
-	expansionList.push_back(make_unique<Expansion>(possibleExpansions[0]));
-	expansionList.push_back(make_unique<Expansion>(possibleExpansions[1]));
 }
 
-void TileHallway3::Align(Direction dirA, Direction dirB, Direction dirC){
+void TileHallway3::Align(Expansion& srcExp, vector<Expansion>& expansions){
 	uint8_t pattern = 0;
+
+	Direction dirA = common::OppositeDirection(srcExp.GetDirection());	//Opposite bc make all directions going out of the object, to make alignment more easy
+	Direction dirB = expansions[0].GetDirection();
+	Direction dirC = expansions[1].GetDirection();
 
 	for (int i = 0; i < 4; i++){
 		Direction dir = static_cast<Direction>(i);

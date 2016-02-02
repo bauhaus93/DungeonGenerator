@@ -21,10 +21,14 @@ protected:
 
 public:
 					Tile(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
+					Tile(const std::string & idArg, const Position & posArg, const Size & sizeArg);
 	virtual			~Tile();
 
 	//precondition: the called tile can be placed rightful
-	virtual void	AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions) = 0;
+	void			AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions);
+	virtual void	FilterExpansions(Expansion& srcExp, std::vector<Expansion>& possibleExpansions) = 0;
+	virtual void	Align(Expansion& srcExp, std::vector<Expansion>& possibleExpansions) = 0;
+
 
 	const Position&	GetPos()		const;
 	const Size&		GetSize()		const;

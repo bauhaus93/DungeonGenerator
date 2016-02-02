@@ -1,11 +1,9 @@
 #include "DungeonGenerator.h"
 
-//TODO: if straight hall would be endcap, maybe make corner??
-
 using namespace std;
 
 DungeonGenerator::DungeonGenerator():
-	maxSize{10000}{
+	maxSize{ 100 }{
 
 	common::Randomize();
 	collision = make_unique<CollisionChecker>(tiles, expansions);
@@ -44,9 +42,9 @@ unique_ptr<Tile> DungeonGenerator::GetTiles(){
 	auto tile = move(tiles.back());
 	tiles.pop_back();
 
-	if (tiles.size() % 1000 == 0){
+	/*if (tiles.size() % 1000 == 0){
 		cout << "tiles left for retrieving: " << tiles.size() << endl;
-	}
+	}*/
 
 	return move(tile);
 }
@@ -63,13 +61,13 @@ void DungeonGenerator::Generate(){
 	MakeFirstTile();
 
 	while (tiles.size() < maxSize && !expansions.empty()){
-		if (tiles.size() % 1000 == 0){
+		/*if (tiles.size() % 1000 == 0){
 			cout << "curr dungeon size: " << tiles.size() << endl;
-		}
-		auto exp = move(expansions.front());
-		expansions.erase(expansions.begin());
+		}*/
 		//auto exp = move(expansions.back());
 		//expansions.pop_back();	//if pop_back() must also use expansion.back() not .front()
+		auto exp = move(expansions.front());
+		expansions.erase(expansions.begin());
 
 		vector<Expansion> possibleExpansions;
 		GetPossibleExpansions(*exp, factory[TileType::HALL1]->GetSize(), possibleExpansions);
@@ -98,11 +96,6 @@ TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& 
 	bool threeWayPossible = possibleExpansions.size() >= 2;
 	bool fourWayPossible = possibleExpansions.size() >= 3;
 
-	static bool doOnce = false;
-	if (!doOnce){
-		doOnce = true;
-		return *factory[TileType::HALL3];
-	}
 	if (possibleExpansions.empty())
 		return *factory[TileType::HALL1];
 
@@ -116,13 +109,13 @@ TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& 
 	if (tiles.size() < maxSize){
 		int rnd = common::Random(100);
 
-		if (/*fourWayPossible &&*/ rnd < 5){
+		if (/*fourWayPossible &&*/ rnd < 2){
 			return *factory[TileType::HALL1];	//TODO: Make 4way
 		}
-		else if (threeWayPossible && rnd < 40){
+		else if (threeWayPossible && rnd < 15){
 			return *factory[TileType::HALL3];
 		}
-		else if (rnd < 60){
+		else if (rnd < 50){
 			if (cornerPossible)
 				return *factory[TileType::CORNER];
 			else if(straightPossible)
@@ -163,15 +156,20 @@ void DungeonGenerator::MakeFirstTile(){
 	auto exp = move(expansions.back());
 	expansions.pop_back();
 	tiles.push_back(factory[TileType::HALL1]->Create(*exp));
-	exp->SetDirection(common::OppositeDirection(exp->GetDirection()));
+	//exp->SetDirection(common::OppositeDirection(exp->GetDirection()));
 	exp->Move(exp->GetDirection(), factory[TileType::HALL1]->GetSize());
 	expansions.push_back(move(exp));
 }
 
 void DungeonGenerator::FinishExpansions(){
+	vector<Expansion> dummy;
 	while (!expansions.empty()){
 		auto exp = move(expansions.back());
 		expansions.pop_back();
-		tiles.push_back(factory[TileType::HALL1]->Create(*exp));
+		auto tile = factory[TileType::HALL1]->Create(*exp);
+		if (tile != nullptr){
+			tile->AddValidExpansions(*exp, expansions, dummy);
+			tiles.push_back(move(tile));
+		}
 	}
 }

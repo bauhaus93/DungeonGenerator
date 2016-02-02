@@ -13,11 +13,9 @@ class TileHallway1:	public Tile{
 
 public:
 			TileHallway1(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
+			TileHallway1(const std::string& idArg, const Position & posArg, const Size & sizeArg);
 			~TileHallway1();
 
-	void	AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions) override;
-
+	void	FilterExpansions(Expansion& srcExp, std::vector<Expansion>& possibleExpansions) override;
+	void	Align(Expansion& srcExp, std::vector<Expansion>& expansions) override;
 };
-
-inline void TileHallway1::AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions){
-}
