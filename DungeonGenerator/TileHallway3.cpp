@@ -14,15 +14,6 @@ TileHallway3::TileHallway3(const string& idArg, const Position& posArg, const Si
 TileHallway3::~TileHallway3(){
 }
 
-/*void TileHallway3::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
-
-	FilterExpansions(srcExp, possibleExpansions);
-	Align(srcExp, possibleExpansions);
-
-	for(Expansion& exp : possibleExpansions)
-		expansionList.push_back(make_unique<Expansion>(exp));
-}*/
-
 void TileHallway3::FilterExpansions(Expansion& srcExp, vector<Expansion>& possibleExpansions){
 	while (possibleExpansions.size() > 2){
 		possibleExpansions.erase(possibleExpansions.begin() + common::Random(possibleExpansions.size()));
@@ -60,5 +51,4 @@ void TileHallway3::Align(Expansion& srcExp, vector<Expansion>& expansions){
 			assert(0);
 			break;
 	}
-
 }

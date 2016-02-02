@@ -7,11 +7,11 @@
 #include "Expansion.h"
 #include "CollisionChecker.h"
 
-class TileHallway3: public Tile{
+class TileHallway4 : public Tile{
 public:
-			TileHallway3(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
-			TileHallway3(const std::string& idArg, const Position& posArg, const Size& sizeArg);
-			~TileHallway3();
+	TileHallway4(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
+	TileHallway4(const std::string& idArg, const Position& posArg, const Size& sizeArg);
+	~TileHallway4();
 
 	void	FilterExpansions(Expansion& srcExp, std::vector<Expansion>& possibleExpansions) override;
 	void	Align(Expansion& srcExp, std::vector<Expansion>& expansions) override;

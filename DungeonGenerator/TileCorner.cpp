@@ -60,24 +60,3 @@ void TileCorner::Align(Expansion& srcExp, vector<Expansion>& possibleExpansions)
 			break;
 	}
 }
-
-/*void TileCorner::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
-
-	for (size_t i = 0; i < possibleExpansions.size(); i++){
-		if (possibleExpansions[i].GetDirection() == srcExp.GetDirection()){
-			possibleExpansions.erase(possibleExpansions.begin() + i);
-		}
-		else if (possibleExpansions[i].GetDirection() == common::OppositeDirection(srcExp.GetDirection())){
-			possibleExpansions.erase(possibleExpansions.begin() + i);
-		}
-	}
-	assert(possibleExpansions.size() > 0);
-
-	auto& destExp = possibleExpansions.at(common::Random(possibleExpansions.size()));
-	auto srcDir = srcExp.GetDirection();
-	auto destDir = destExp.GetDirection();
-	Align(srcDir, destDir);
-
-	expansionList.push_back(make_unique<Expansion>(destExp));
-}*/
-

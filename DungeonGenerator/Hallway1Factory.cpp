@@ -11,5 +11,6 @@ Hallway1Factory::~Hallway1Factory(){
 }
 
 unique_ptr<Tile> Hallway1Factory::Create(Expansion& exp){
+	//Rotation will be defined later by expansions
 	return make_unique<TileHallway1>(id, exp, size);
 }

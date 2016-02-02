@@ -39,13 +39,3 @@ void TileHallway2::Align(Expansion& srcExp, std::vector<Expansion>& expansions){
 			break;
 	}
 }
-
-/*void TileHallway2::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
-	for (auto& possibleExp : possibleExpansions){
-		if (srcExp.GetDirection() == possibleExp.GetDirection()){
-			expansionList.push_back(make_unique<Expansion>(possibleExp));
-			break;
-		}
-	}
-}*/
-

@@ -1,5 +1,8 @@
 #pragma once
 
+
+#include <iomanip>
+#include <sstream>
 #include <string>
 #include <chrono>
 #include <random>
@@ -45,8 +48,6 @@ namespace common{
 		return timer.now();
 	}
 
-	inline float TimeDiff(std::chrono::time_point<std::chrono::steady_clock> start){
-		return (std::chrono::duration<float>(timer.now() - start)).count();
-	}
+	extern std::string TimeDiff(std::chrono::time_point<std::chrono::steady_clock> start);
 
 }

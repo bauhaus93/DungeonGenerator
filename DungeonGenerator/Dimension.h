@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "Defs.h"
+#include "Common.h"
 
 typedef class Dimension Size;
 typedef class Dimension Rotation;

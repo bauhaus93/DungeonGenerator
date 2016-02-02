@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CollisionChecker.cpp" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="CornerFactory.cpp" />
     <ClCompile Include="DungeonGenerator.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="Hallway1Factory.cpp" />
     <ClCompile Include="Hallway2Factory.cpp" />
     <ClCompile Include="Hallway3Factory.cpp" />
+    <ClCompile Include="Hallway4Factory.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Dimension.cpp" />
     <ClCompile Include="Position.cpp" />
@@ -140,12 +142,13 @@
     <ClCompile Include="TileHallway1.cpp" />
     <ClCompile Include="TileHallway2.cpp" />
     <ClCompile Include="TileHallway3.cpp" />
+    <ClCompile Include="TileHallway4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="CornerFactory.h" />
-    <ClInclude Include="Defs.h" />
+    <ClInclude Include="Common.h" />
     <ClInclude Include="DungeonGenerator.h" />
     <ClInclude Include="DungeonHandler.h" />
     <ClInclude Include="Enums.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="Hallway2Factory.h" />
     <ClInclude Include="Dimension.h" />
     <ClInclude Include="Hallway3Factory.h" />
+    <ClInclude Include="Hallway4Factory.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
@@ -162,6 +166,7 @@
     <ClInclude Include="TileHallway1.h" />
     <ClInclude Include="TileHallway2.h" />
     <ClInclude Include="TileHallway3.h" />
+    <ClInclude Include="TileHallway4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

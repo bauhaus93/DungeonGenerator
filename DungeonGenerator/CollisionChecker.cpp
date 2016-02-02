@@ -38,7 +38,7 @@ bool CollisionChecker::ValidateDungeon(){
 		cout << "Dungeon valid!" << endl;
 
 	auto diff = common::TimeDiff(start);
-	cout << "Dungeon validation took " << diff*1e3 << "ms" << endl;
+	cout << "Dungeon validation took " << diff << endl;
 
 	return valid;
 

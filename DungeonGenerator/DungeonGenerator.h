@@ -14,11 +14,12 @@
 
 #include "Tile.h"
 #include "Position.h"
-#include "Defs.h"
+#include "Common.h"
 #include "TileFactory.h"
 #include "Hallway1Factory.h"
 #include "Hallway2Factory.h"
 #include "Hallway3Factory.h"
+#include "Hallway4Factory.h"
 #include "CornerFactory.h"
 #include "Expansion.h"
 #include "CollisionChecker.h"

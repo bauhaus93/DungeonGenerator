@@ -81,12 +81,18 @@
     <ClCompile Include="Hallway3Factory.cpp">
       <Filter>Quelldateien\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="TileHallway4.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway4Factory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Defs.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="DungeonGenerator.h">
@@ -142,6 +148,15 @@
     </ClInclude>
     <ClInclude Include="Hallway3Factory.h">
       <Filter>Headerdateien\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="TileHallway4.h">
+      <Filter>Headerdateien\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway4Factory.h">
+      <Filter>Headerdateien\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

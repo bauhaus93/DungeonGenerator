@@ -25,13 +25,14 @@ void DungeonGenerator::AddTileFactory(TileType type, string id, Size& size){
 		case TileType::HALL3:
 			factory.insert(make_pair(type, make_unique<Hallway3Factory>(id, size)));
 			break;
-		/*case TileType::HALL4:
+		case TileType::HALL4:
 			factory.insert(make_pair(type, make_unique<Hallway4Factory>(id, size)));
-			break;*/
+			break;
 		case TileType::CORNER:
 			factory.insert(make_pair(type, make_unique<CornerFactory>(id, size)));
 			break;
 		default:
+			assert(0);
 			break;
 	}
 }
@@ -54,6 +55,8 @@ void DungeonGenerator::AddExpansion(const Expansion& exp){
 }
 
 void DungeonGenerator::Generate(){
+	assert(factory.size() == 5);
+
 	cout << "creating dungeon..." << endl;
 
 	auto start = common::Time();
@@ -84,7 +87,7 @@ void DungeonGenerator::Generate(){
 	FinishExpansions();
 
 	auto diff = common::TimeDiff(start);
-	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff*1e3 << " ms (" << tiles.size() << " tiles)" << endl;
+	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff << " (" << tiles.size() << " tiles)" << endl;
 
 	collision->ValidateDungeon();
 }
@@ -109,8 +112,11 @@ TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& 
 	if (tiles.size() < maxSize){
 		int rnd = common::Random(100);
 
-		if (/*fourWayPossible &&*/ rnd < 2){
-			return *factory[TileType::HALL1];	//TODO: Make 4way
+		if (rnd < 5){
+			return *factory[TileType::HALL1];
+		}
+		else if (fourWayPossible && rnd < 10){
+			return *factory[TileType::HALL4];
 		}
 		else if (threeWayPossible && rnd < 15){
 			return *factory[TileType::HALL3];

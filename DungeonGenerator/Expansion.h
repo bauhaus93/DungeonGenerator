@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "Position.h"
-#include "Defs.h"
+#include "Common.h"
 
 class Expansion: public Position{
 
