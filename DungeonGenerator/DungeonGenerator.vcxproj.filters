@@ -75,6 +75,12 @@
     <ClCompile Include="DungeonHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="TileHallway3.cpp">
+      <Filter>Quelldateien\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Hallway3Factory.cpp">
+      <Filter>Quelldateien\Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">
@@ -130,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="DungeonHandler.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TileHallway3.h">
+      <Filter>Headerdateien\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Hallway3Factory.h">
+      <Filter>Headerdateien\Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

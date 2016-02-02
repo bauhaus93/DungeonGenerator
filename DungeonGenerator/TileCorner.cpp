@@ -11,27 +11,22 @@ TileCorner::~TileCorner(){
 }
 
 void TileCorner::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
-	
-	/*cout << "src is " << common::DirString(srcExp.GetDirection()) << endl;
-	for (auto& exp : possibleExpansions){
-		cout << " possible: " << common::DirString(exp.GetDirection()) << endl;
-	}*/
 
 	for (size_t i = 0; i < possibleExpansions.size(); i++){
 		if (possibleExpansions[i].GetDirection() == srcExp.GetDirection()){
-			possibleExpansions.erase(possibleExpansions.begin()+i);
+			possibleExpansions.erase(possibleExpansions.begin() + i);
 		}
 		else if (possibleExpansions[i].GetDirection() == common::OppositeDirection(srcExp.GetDirection())){
 			possibleExpansions.erase(possibleExpansions.begin() + i);
 		}
 	}
-	if (possibleExpansions.size() == 0)
-		return;
+	assert(possibleExpansions.size() > 0);
+
 	auto& destExp = possibleExpansions.at(common::Random(possibleExpansions.size()));
 	auto srcDir = srcExp.GetDirection();
 	auto destDir = destExp.GetDirection();
 	Align(srcDir, destDir);
-	//cout << "pushing " <<  common::DirString(srcDir) << " -> " << common::DirString(destDir) << endl;
+
 	expansionList.push_back(make_unique<Expansion>(destExp));
 }
 

@@ -130,6 +130,7 @@
     <ClCompile Include="Expansion.cpp" />
     <ClCompile Include="Hallway1Factory.cpp" />
     <ClCompile Include="Hallway2Factory.cpp" />
+    <ClCompile Include="Hallway3Factory.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Dimension.cpp" />
     <ClCompile Include="Position.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileHallway1.cpp" />
     <ClCompile Include="TileHallway2.cpp" />
+    <ClCompile Include="TileHallway3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionChecker.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="Hallway1Factory.h" />
     <ClInclude Include="Hallway2Factory.h" />
     <ClInclude Include="Dimension.h" />
+    <ClInclude Include="Hallway3Factory.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Tile.h" />
@@ -158,6 +161,7 @@
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileHallway1.h" />
     <ClInclude Include="TileHallway2.h" />
+    <ClInclude Include="TileHallway3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

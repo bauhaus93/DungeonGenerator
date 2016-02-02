@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include <assert.h>
+
 #include "Position.h"
 #include "Expansion.h"
 
@@ -21,6 +23,7 @@ public:
 					Tile(const std::string& idArg, const Position& posArg, const Size& sizeArg, const Rotation& rotationArg);
 	virtual			~Tile();
 
+	//precondition: the called tile can be placed rightful
 	virtual void	AddValidExpansions(Expansion& srcExp, std::vector<std::unique_ptr<Expansion>>& expansionList, std::vector<Expansion>& possibleExpansions) = 0;
 
 	const Position&	GetPos()		const;

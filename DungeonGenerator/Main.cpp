@@ -8,7 +8,6 @@ static DungeonHandler* dungeonHandler;
 BOOLEAN WINAPI DllMain(HINSTANCE hDllHandle, DWORD nReason, LPVOID Reserved){
 	BOOLEAN bSuccess = TRUE;
 
-
 	switch (nReason){
 	case DLL_PROCESS_ATTACH:
 		AllocConsole();

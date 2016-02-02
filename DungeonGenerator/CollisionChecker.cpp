@@ -2,7 +2,7 @@
 
 using namespace std;
 
-CollisionChecker::CollisionChecker(const vector<unique_ptr<Tile>>& tilesArg, const vector<unique_ptr<Expansion>>& expansionsArg) :
+CollisionChecker::CollisionChecker(const vector<unique_ptr<Tile>>& tilesArg, const vector<unique_ptr<Expansion>>& expansionsArg):
 	tiles{ tilesArg },
 	expansions{ expansionsArg }{
 }
