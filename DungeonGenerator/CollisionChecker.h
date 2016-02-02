@@ -12,13 +12,16 @@ class CollisionChecker{
 	const std::vector<std::unique_ptr<Tile>>&		tiles;
 	const std::vector<std::unique_ptr<Expansion>>&	expansions;
 
+	bool	Collides(const Position& posA, const Size& sizeA, const Position& posB, const Size& sizeB);
 	bool	CheckCoordinate(float dimA, float sizeA, float dimB, float sizeB);
 
 public:
 			CollisionChecker(const std::vector<std::unique_ptr<Tile>>& tilesArg, const std::vector<std::unique_ptr<Expansion>>& expansionsArg);
 			~CollisionChecker();
+	bool	ValidateDungeon();
 	bool	Check(const Position& pos, const Size& size);
-
+	bool	Recheck();
+	
 };
 
 inline bool CollisionChecker::CheckCoordinate(float dimA, float sizeA, float dimB, float sizeB){

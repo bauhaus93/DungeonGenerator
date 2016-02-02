@@ -12,7 +12,7 @@ TileHallway3::~TileHallway3(){
 
 void TileHallway3::AddValidExpansions(Expansion& srcExp, vector<unique_ptr<Expansion>>& expansionList, vector<Expansion>& possibleExpansions){
 
-	if (possibleExpansions.size() > 2){
+	while (possibleExpansions.size() > 2){
 		possibleExpansions.erase(possibleExpansions.begin()+common::Random(possibleExpansions.size()));
 	}
 	assert(possibleExpansions.size() == 2);
@@ -49,6 +49,7 @@ void TileHallway3::Align(Direction dirA, Direction dirB, Direction dirC){
 			break;
 		default:
 			assert(0);
+			break;
 	}
 
 }

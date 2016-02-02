@@ -4,11 +4,8 @@
 
 using namespace std;
 
-static chrono::high_resolution_clock timer;
-
-
 DungeonGenerator::DungeonGenerator():
-	maxSize{300}{
+	maxSize{10000}{
 
 	common::Randomize();
 	collision = make_unique<CollisionChecker>(tiles, expansions);
@@ -46,6 +43,11 @@ unique_ptr<Tile> DungeonGenerator::GetTiles(){
 		return nullptr;
 	auto tile = move(tiles.back());
 	tiles.pop_back();
+
+	if (tiles.size() % 1000 == 0){
+		cout << "tiles left for retrieving: " << tiles.size() << endl;
+	}
+
 	return move(tile);
 }
 
@@ -56,16 +58,21 @@ void DungeonGenerator::AddExpansion(const Expansion& exp){
 void DungeonGenerator::Generate(){
 	cout << "creating dungeon..." << endl;
 
-	auto start = timer.now();
+	auto start = common::Time();
+
+	MakeFirstTile();
 
 	while (tiles.size() < maxSize && !expansions.empty()){
+		if (tiles.size() % 1000 == 0){
+			cout << "curr dungeon size: " << tiles.size() << endl;
+		}
 		auto exp = move(expansions.front());
-		expansions.pop_back();
+		expansions.erase(expansions.begin());
+		//auto exp = move(expansions.back());
+		//expansions.pop_back();	//if pop_back() must also use expansion.back() not .front()
 
-		cout << "gpe!" << endl;
 		vector<Expansion> possibleExpansions;
 		GetPossibleExpansions(*exp, factory[TileType::HALL1]->GetSize(), possibleExpansions);
-		cout << "fin!" << endl;
 
 		auto& tf = GetFactory(exp->GetDirection(), possibleExpansions);
 		
@@ -74,19 +81,30 @@ void DungeonGenerator::Generate(){
 			tile->AddValidExpansions(*exp, expansions, possibleExpansions);
 			tiles.push_back(move(tile));
 		}
-		cout << "run finished!" << endl;
 	}
 
-	chrono::duration<float> diff = (timer.now() - start);
-	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff.count()*1e3 << " ms (" << tiles.size() << " tiles)" << endl;
+	FinishExpansions();
+
+	auto diff = common::TimeDiff(start);
+	cout << std::setprecision(2) << std::fixed << "dungeon created in " << diff*1e3 << " ms (" << tiles.size() << " tiles)" << endl;
+
+	collision->ValidateDungeon();
 }
 
 TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& possibleExpansions){
 
 	bool straightPossible = false;
 	bool cornerPossible = false;
-	bool threeWayPossible = possibleExpansions.size() == 3;
-	bool fourWayPossible = possibleExpansions.size() == 4;
+	bool threeWayPossible = possibleExpansions.size() >= 2;
+	bool fourWayPossible = possibleExpansions.size() >= 3;
+
+	static bool doOnce = false;
+	if (!doOnce){
+		doOnce = true;
+		return *factory[TileType::HALL3];
+	}
+	if (possibleExpansions.empty())
+		return *factory[TileType::HALL1];
 
 	for (auto& exp : possibleExpansions){
 		if (currDir == exp.GetDirection())
@@ -97,15 +115,14 @@ TileFactory& DungeonGenerator::GetFactory(Direction currDir, vector<Expansion>& 
 
 	if (tiles.size() < maxSize){
 		int rnd = common::Random(100);
-		cout << "rnd: " << rnd << endl;
 
-		if (fourWayPossible && rnd < 0){	//make 5
-			return *factory[TileType::HALL3];	//TODO: Make 4way
+		if (/*fourWayPossible &&*/ rnd < 5){
+			return *factory[TileType::HALL1];	//TODO: Make 4way
 		}
-		else if (threeWayPossible && rnd < 10){
+		else if (threeWayPossible && rnd < 40){
 			return *factory[TileType::HALL3];
 		}
-		else if (rnd < 20){
+		else if (rnd < 60){
 			if (cornerPossible)
 				return *factory[TileType::CORNER];
 			else if(straightPossible)
@@ -137,5 +154,24 @@ void DungeonGenerator::GetPossibleExpansions(const Expansion& src, const Size& s
 			possibleExpansions.back().SetDirection(dir);
 		}
 		test.Move(common::OppositeDirection(dir), size);
+	}
+}
+
+void DungeonGenerator::MakeFirstTile(){
+	assert(expansions.size() > 0);
+
+	auto exp = move(expansions.back());
+	expansions.pop_back();
+	tiles.push_back(factory[TileType::HALL1]->Create(*exp));
+	exp->SetDirection(common::OppositeDirection(exp->GetDirection()));
+	exp->Move(exp->GetDirection(), factory[TileType::HALL1]->GetSize());
+	expansions.push_back(move(exp));
+}
+
+void DungeonGenerator::FinishExpansions(){
+	while (!expansions.empty()){
+		auto exp = move(expansions.back());
+		expansions.pop_back();
+		tiles.push_back(factory[TileType::HALL1]->Create(*exp));
 	}
 }

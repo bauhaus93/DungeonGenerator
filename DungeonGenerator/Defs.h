@@ -7,6 +7,7 @@
 #include "Enums.h"
 
 static std::minstd_rand generator;
+static std::chrono::high_resolution_clock timer;
 
 namespace common{
 
@@ -39,4 +40,13 @@ namespace common{
 	inline int Random(int min, int max){
 		return min + Random(max - min + 1);
 	}
+
+	inline std::chrono::time_point<std::chrono::steady_clock> Time(){
+		return timer.now();
+	}
+
+	inline float TimeDiff(std::chrono::time_point<std::chrono::steady_clock> start){
+		return (std::chrono::duration<float>(timer.now() - start)).count();
+	}
+
 }

@@ -45,6 +45,8 @@ public:
 	void							Generate();
 	TileFactory&					GetFactory(Direction currDir, std::vector<Expansion>& possibleExpansions);
 	void							GetPossibleExpansions(const Expansion& src, const Size& size, std::vector<Expansion>& possibleExpansions);
+	void							MakeFirstTile();
+	void							FinishExpansions();
 	void							AddExpansion(const Expansion& exp);
 
 };
